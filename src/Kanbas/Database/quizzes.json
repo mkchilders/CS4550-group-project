@@ -1,0 +1,21 @@
+[
+    {
+        "id": "Q1",
+        "title": "Quiz 1",
+        "description": "Example quiz",
+        "quizType": "Graded Quiz",
+        "points": 10,
+        "assignmentGroup": "Quizzes",
+        "shuffleAnswers": false,
+        "timeLimit": 20,
+        "multipleAttempts": true,
+        "showCorrectAnswers": true,
+        "accessCode": "",
+        "oneQuestionAtATime": false,
+        "webcamRequired": false,
+        "lockQuestionsAfterAnswering": false,
+        "dueDate": "2024-04-01",
+        "availableDate": "2024-02-01",
+        "untilDate": "2024-05-01"
+    }
+]
