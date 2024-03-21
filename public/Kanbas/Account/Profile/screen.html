@@ -1,20 +1,30 @@
 <html>
-    <head></head>
+    <head>
+        <link rel="stylesheet" href="/Kanbas/styles.css" />
+        <link rel="stylesheet" href="/Kanbas/Navigation/index.css" />
+        <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css" />
+        <link href="/libs/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    </head>
     <body>
         <table>
             <tbody>
                 <tr valign="top">
                     <td>
-                        <ul>
-                            <li><a href="/Kanbas/Account/Profile/screen.html">Account</a></li>
-                            <li><a href="/Kanbas/Dashboard/screen.html">Dashboard</a></li>  
-                            <li><a href="/Kanbas/Courses/Home/screen.html">Courses</a></li>
-                            <li><a href="/Kanbas/Calendar/index.html">Calendar</a></li>
-                            <li><a href="/Kanbas/Inbox/index.html">Inbox</a></li>
-                            <li><a href="/Kanbas/History/index.html">History</a></li>
-                            <li><a href="/Kanbas/Studio/index.html">Studio</a></li>
-                            <li><a href="/Kanbas/Commons/index.html">Commons</a></li>
-                            <li><a href="/Kanbas/Help/index.html">Help</a></li>
+                        <ul class="wd-kanbas-navigation sticky-top vh-100">
+                            <a href="http://northeastern.edu"><li><img width="60px" src="/images/northeastern-logo.png" /></li></a>
+                            <a href="/Kanbas/Account/Profile/screen.html">
+                                <li class="wd-active"><i class="fa fa-user-circle" style="color: rgb(125, 125, 125);"></i>Account</li></a>
+                            <a href="/Kanbas/Dashboard/screen.html">
+                                <li><i class="fa fa-tachometer"></i>Dashboard</li></a>
+                            <a href="/Kanbas/Courses/Home/screen.html">
+                                <li><i class="fa fa-book"></i>Courses</li></a> 
+                            <a href="#"><li><i class="fa fa-calendar"></i>Calendar</li></a>
+                            <a href="#"><li>
+                                <i class="fa fa-envelope-o"></i><br />Inbox</li></a>
+                            <a href="#"><li><i class="fa fa-clock-o"></i><br />History</li></a>
+                            <a href="#"><li><i class="fa fa-desktop"></i><br />Studio</li></a>
+                            <a href="#"><li><i class="fa fa-share-square-o"></i>Commons</li></a>
+                            <a href="#"><li><i class="fa fa-question-circle-o"></i><br/>Help</li></a>
                         </ul>
                     </td>
                     <td>

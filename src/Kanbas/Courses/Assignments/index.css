@@ -1,0 +1,16 @@
+/* .wd-assignment-info {
+    display: flex;
+    flex-direction: column;
+} */
+
+.wd-assignment-info a {
+    text-decoration: none;
+}
+
+.wd-assignment-info span {
+    font-size: 0.8rem;
+}
+
+.wd-assignment-info span:first-child {
+    color: rgb(200,16,46);
+}

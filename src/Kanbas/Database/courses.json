@@ -1,0 +1,10 @@
+[ { "_id": "RS101", "name": "Web Development", "number": "CS4550", "startDate": "2023-01-10",
+    "endDate": "2023-05-15", "image": "reactjs.webp"  },
+  { "_id": "RS102", "name": "Film 101", "number": "MSCR1100", "startDate": "2023-01-10",
+    "endDate": "2023-05-15", "image": "rearwindow.jpg"  },
+  { "_id": "RS103", "name": "Theory of Computation", "number": "CS3800", "startDate": "2023-01-10",
+    "endDate": "2023-05-15", "image": "toc.jpg"  },
+  { "_id": "RS104", "name": "Europe: Empires, Revolutions, and Wars", "number": "HIST1170", "startDate": "2023-01-10",
+    "endDate": "2023-05-15", "image": "eurohist.jpg"  },
+  { "_id": "RS105", "name": "Experience and Interaction", "number": "ARTF2223", "startDate": "2023-01-10",
+    "endDate": "2023-05-15", "image": "interaction-design.png"  }]
