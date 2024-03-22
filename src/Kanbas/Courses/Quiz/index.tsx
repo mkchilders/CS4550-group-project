@@ -1,8 +1,8 @@
-import QuizzList from "./list";
+import QuizList from "./list";
 function Quizzes() {
   return (
     <div>
-      <QuizzList />
+      <QuizList />
     </div>
   );
 }

@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   quizzes: quizzes,
-  quizz: {},
+  quiz: {},
 };
 
 const quizzesSlice = createSlice({
   name: "quizzes",
   initialState,
   reducers: {
-    addQuizz: (state, action) => {
-      state.quizz = [
+    addQuiz: (state, action) => {
+      state.quiz = [
         { ...action.payload, _id: new Date().getTime().toString() },
         ...state.quizzes,
       ];
@@ -19,5 +19,5 @@ const quizzesSlice = createSlice({
   },
 });
 
-export const { addQuizz } = quizzesSlice.actions;
+export const { addQuiz } = quizzesSlice.actions;
 export default quizzesSlice.reducer;

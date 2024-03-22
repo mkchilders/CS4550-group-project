@@ -9,11 +9,11 @@ import { KanbasState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
-function QuizzList() {
+function QuizList() {
   // There are a list of quizzes
   const { courseId } = useParams();
-  const quizzList = useSelector(
-    (state: KanbasState) => state.quizzReducer.quizzes
+  const quizList = useSelector(
+    (state: KanbasState) => state.quizReducer.quizzes
   );
   const dispatch = useDispatch();
 
@@ -32,14 +32,14 @@ function QuizzList() {
       </div>
       <hr />
       <ul className="list-group">
-        {quizzList
-          .filter((quizz) => quizz.course === courseId)
-          .map((quizz) => (
+        {quizList
+          .filter((quiz) => quiz.course === courseId)
+          .map((quiz) => (
             <li className="list-group-item">
               <div className="d-flex justify-content-between">
                 <span>
                   <FontAwesomeIcon icon={faCaretDown} className="me-3" />
-                  {quizz.title}
+                  {quiz.title}
                 </span>
                 <span>
                   <FontAwesomeIcon icon={faBan} className="me-3" />
@@ -55,4 +55,4 @@ function QuizzList() {
   );
 }
 
-export default QuizzList;
+export default QuizList;

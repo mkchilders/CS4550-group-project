@@ -5,7 +5,7 @@ import TopNavigation from "./TopNavigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
-import Quizzes from "./Quizz";
+import Quizzes from "./Quiz";
 
 function Courses({ courses }: any) {
   const { courseId } = useParams();
