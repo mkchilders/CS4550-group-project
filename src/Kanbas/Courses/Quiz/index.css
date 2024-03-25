@@ -1,0 +1,15 @@
+.quiz-link {
+    text-decoration: none;
+    color: rgb(77, 77, 77);
+    font-weight: bold;
+}
+
+.quiz-attribute div {
+    min-height: 2rem;
+    line-height: 2rem;
+    color: rgb(77, 77, 77);
+}
+
+table * {
+    color: rgb(77, 77, 77) !important;
+}

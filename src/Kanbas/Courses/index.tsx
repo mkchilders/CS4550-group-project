@@ -6,6 +6,9 @@ import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
 import Quizzes from "./Quiz";
+import QuizDetails from "./Quiz/quizDetails";
+import QuizPreview from "./Quiz/preview";
+import QuizEdit from "./Quiz/edit";
 
 function Courses({ courses }: any) {
   const { courseId } = useParams();
@@ -28,6 +31,9 @@ function Courses({ courses }: any) {
               path="Assignments/:assignmentId"
               element={<h1>Assignment Editor</h1>}
             />
+            <Route path="Quizzes/:quizId" element={<QuizDetails />} />
+            <Route path="Quizzes/:quizId/Preview" element={<QuizPreview />} />
+            <Route path="Quizzes/:quizId/Edit" element={<QuizEdit />} />
             <Route path="Grades" element={<h1>Grades</h1>} />
           </Routes>
         </div>

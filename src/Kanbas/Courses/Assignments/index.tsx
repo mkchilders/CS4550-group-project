@@ -10,7 +10,7 @@ function Assignments() {
   return (
     <>
       {/* {<!-- Add buttons and other fields here -->} */}
-      <ul className="list-group wd-modules">
+      <ul className="list-group wd-modules ms-3">
         <li className="list-group-item">
           <div>
             <FaEllipsisV className="me-2" /> ASSIGNMENTS

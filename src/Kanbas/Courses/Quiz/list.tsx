@@ -1,13 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEllipsisVertical,
-  faPlus,
-  faBan,
-  faCaretDown,
-} from "@fortawesome/free-solid-svg-icons";
 import { KanbasState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { FaBan, FaCaretDown, FaEllipsisV, FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import "./index.css";
 
 function QuizList() {
   // There are a list of quizzes
@@ -18,15 +14,15 @@ function QuizList() {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex-fill">
+    <div className="flex-fill ms-3">
       <div className="d-flex justify-content-between">
         <input type="text" placeholder="Search for Quiz" />
         <div>
           <button className="btn btn-danger">
-            <FontAwesomeIcon icon={faPlus} /> Quiz
+            <FaPlus /> Quiz
           </button>
           <button className="btn btn-light btn-lg ms-1">
-            <FontAwesomeIcon icon={faEllipsisVertical} />
+            <FaEllipsisV />
           </button>
         </div>
       </div>
@@ -38,13 +34,15 @@ function QuizList() {
             <li className="list-group-item">
               <div className="d-flex justify-content-between">
                 <span>
-                  <FontAwesomeIcon icon={faCaretDown} className="me-3" />
-                  {quiz.title}
+                  <FaCaretDown className="me-3" />
+                  <Link className="quiz-link" to={`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz.id}`}>
+                    {quiz.title} 
+                  </Link>
                 </span>
                 <span>
-                  <FontAwesomeIcon icon={faBan} className="me-3" />
+                  <FaBan className="me-3" />
                   <button className="btn btn-light me-3">
-                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                    <FaEllipsisV />
                   </button>
                 </span>
               </div>
