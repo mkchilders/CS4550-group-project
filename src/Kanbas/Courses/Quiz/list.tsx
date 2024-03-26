@@ -11,6 +11,7 @@ import {
   FaPoo,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { deleteQuiz } from "./quizReducer";
 
 function QuizList() {
   // There are a list of quizzes
@@ -66,10 +67,37 @@ function QuizList() {
                           </Link>
                         </span>
                         <span>
-                          <FaBan className="me-3" />
-                          <button className="btn btn-light me-3">
-                            <FaEllipsisV />
-                          </button>
+                          <div className="d-flex align-items-center">
+                            <FaBan className="me-3" />
+                            <div className="dropdown">
+                              <button
+                                className="btn btn-secondary dropdown-toggle"
+                                type={"button"}
+                                data-bs-toggle={"dropdown"}
+                                aria-expanded={"false"}
+                              >
+                                <FaEllipsisV />
+                              </button>
+                              <ul className="dropdown-menu">
+                                <li className="dropdown-item">
+                                  <Link
+                                    to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}/Edit`}
+                                  >
+                                    Edit
+                                  </Link>
+                                </li>
+                                <li
+                                  className="dropdown-item"
+                                  onClick={() => dispatch(deleteQuiz(quiz.id))}
+                                >
+                                  Delete
+                                </li>
+                                <li className="dropdown-item">Publish</li>
+                                <li className="dropdown-item">Copy</li>
+                                <li className="dropdown-item">Sort</li>
+                              </ul>
+                            </div>
+                          </div>
                         </span>
                       </div>
                     </li>
