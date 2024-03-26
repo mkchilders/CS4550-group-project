@@ -50,12 +50,13 @@ function QuizList() {
               Quizzes
             </p>
 
-            {quizList.length > 1 ? (
+            {quizList.length > 1 ||
+            (quizList.length == 1 && quizList[0].id !== -1) ? (
               <ul className="list-group">
                 {quizList
                   .filter((quiz) => quiz.course === courseId)
                   .map((quiz) => (
-                    <li className="list-group-item">
+                    <li key={quiz.id} className="list-group-item">
                       <div className="d-flex justify-content-between">
                         <span>
                           <FaPoo size={30} className="me-3" />
@@ -68,10 +69,10 @@ function QuizList() {
                         </span>
                         <span>
                           <div className="d-flex align-items-center">
-                            <FaBan className="me-3" />
+                            <FaBan color={"red"} className="me-3" />
                             <div className="dropdown">
                               <button
-                                className="btn btn-secondary dropdown-toggle"
+                                className="btn btn-outline-secondary dropdown-toggle"
                                 type={"button"}
                                 data-bs-toggle={"dropdown"}
                                 aria-expanded={"false"}
@@ -79,13 +80,12 @@ function QuizList() {
                                 <FaEllipsisV />
                               </button>
                               <ul className="dropdown-menu">
-                                <li className="dropdown-item">
-                                  <Link
-                                    to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}/Edit`}
-                                  >
-                                    Edit
-                                  </Link>
-                                </li>
+                                <Link
+                                  className="text-decoration-none"
+                                  to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}/Edit`}
+                                >
+                                  <li className="dropdown-item">Edit</li>
+                                </Link>
                                 <li
                                   className="dropdown-item"
                                   onClick={() => dispatch(deleteQuiz(quiz.id))}

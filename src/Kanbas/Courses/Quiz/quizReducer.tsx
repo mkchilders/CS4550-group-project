@@ -2,8 +2,8 @@ import { quizzes } from "../../Database";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  quizzes: quizzes,
-  // quizzes: [{ id: -1 }],
+  // quizzes: quizzes,
+  quizzes: [{ id: -1 }],
   quiz: {},
 };
 
