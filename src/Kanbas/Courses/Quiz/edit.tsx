@@ -1,6 +1,27 @@
+import { Link } from "react-router-dom";
+
 function QuizEdit () {
     return (
-        <div>edit</div>
+        <>
+            <div>Points 0</div>
+            <hr />
+            <ul className="nav nav-tabs">
+                <li className="nav-item">
+                    <a className="nav-link active" href="#details" data-bs-toggle="tab">Details</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" href="#questions" data-bs-toggle="tab">Questions</a>
+                </li>
+            </ul>
+            <div className="tab-content">
+                <div className="tab-pane fade show active" id="details">
+                    <p>Details tab content ...</p>
+                </div>
+                <div className="tab-pane fade" id="questions">
+                    <p>Questions tab content ...</p>
+                </div>
+            </div>
+        </>
     );
 }
 
