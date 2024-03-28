@@ -13,7 +13,11 @@ const quizzesSlice = createSlice({
   reducers: {
     addQuiz: (state, action) => {
       state.quizzes = [
-        { ...action.payload, id: new Date().getTime().toString() },
+        {
+          ...action.payload,
+          questions: [],
+          points: 0,
+        },
         ...state.quizzes,
       ];
     },

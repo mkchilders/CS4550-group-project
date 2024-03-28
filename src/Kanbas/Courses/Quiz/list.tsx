@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { deleteQuiz } from "./quizReducer";
+import AddQuiz from "./addQuiz";
 
 function QuizList() {
   // There are a list of quizzes
@@ -27,12 +28,7 @@ function QuizList() {
       <div className="d-flex justify-content-between">
         <input type="text" placeholder="Search for Quiz" />
         <div>
-          <Link
-            className="btn btn-danger"
-            to={`/Kanbas/Courses/${courseId}/Quizzes/addQuiz`}
-          >
-            <FaPlus /> Quiz
-          </Link>
+          <AddQuiz />
           <button className="btn btn-light btn-lg ms-1">
             <FaEllipsisV />
           </button>
@@ -99,6 +95,11 @@ function QuizList() {
                             </div>
                           </div>
                         </span>
+                      </div>
+                      <div>
+                        <h5>
+                          {quiz.points} pts, {quiz.questions.length} Questions
+                        </h5>
                       </div>
                     </li>
                   ))}

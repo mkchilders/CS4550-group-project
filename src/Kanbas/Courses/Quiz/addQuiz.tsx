@@ -9,23 +9,25 @@ function AddQuiz() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
+  const new_id = new Date().getTime().toString();
   return (
     <>
-      <h3>Add Quiz</h3>
-      <button
+      <Link
         className="btn btn-danger"
         onClick={() => {
-          dispatch(addQuiz({ ...quiz, title: "new Quiz", course: courseId }));
+          dispatch(
+            addQuiz({
+              ...quiz,
+              id: new_id,
+              title: "new Quiz",
+              course: courseId,
+            })
+          );
           alert("Success: Quiz Added!");
         }}
+        to={`/Kanbas/Courses/${courseId}/Quizzes/${new_id}`}
       >
         <FaPlus /> Add Quiz
-      </button>
-      <Link
-        className="btn btn-success ms-3"
-        to={`/Kanbas/Courses/${courseId}/Quizzes/`}
-      >
-        Back
       </Link>
     </>
   );
