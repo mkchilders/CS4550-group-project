@@ -27,8 +27,15 @@ function QuizList() {
   const quizList = useSelector(
     (state: KanbasState) => state.quizReducer.quizzes
   );
+  const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
   const dispatch = useDispatch();
   const [quizIsOpen, setQuizIsOpen] = useState(false);
+
+  const handleAddQuiz = () => {
+    client.addQuiz(courseId, quiz).then((quiz) => {
+      dispatch(addQuiz(quiz));
+    });
+  };
 
   const handelDeleteQuiz = (quizId: any) => {
     client.deleteQuiz(quizId).then((status) => dispatch(deleteQuiz(quizId)));
@@ -46,6 +53,15 @@ function QuizList() {
         <input type="text" placeholder="Search for Quiz" />
         <div>
           <AddQuiz />
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              handleAddQuiz();
+              alert("Success: Quiz Added!");
+            }}
+          >
+            <FaPlus /> Add Quiz
+          </button>
           <button className="btn btn-light btn-lg ms-1">
             <FaEllipsisV />
           </button>
