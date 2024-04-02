@@ -1,7 +1,7 @@
 import { KanbasState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaBan,
   FaCaretDown,
@@ -11,8 +11,15 @@ import {
   FaPoo,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { deleteQuiz } from "./quizReducer";
+import {
+  addQuiz,
+  deleteQuiz,
+  updateQuiz,
+  setQuiz,
+  setQuizzes,
+} from "./quizReducer";
 import AddQuiz from "./addQuiz";
+import * as client from "./client";
 
 function QuizList() {
   // There are a list of quizzes
@@ -22,6 +29,16 @@ function QuizList() {
   );
   const dispatch = useDispatch();
   const [quizIsOpen, setQuizIsOpen] = useState(false);
+
+  const handelDeleteQuiz = (quizId: any) => {
+    client.deleteQuiz(quizId).then((status) => dispatch(deleteQuiz(quizId)));
+  };
+
+  useEffect(() => {
+    client
+      .findQuizzesForCourses(courseId)
+      .then((quizzes) => dispatch(setQuizzes(quizzes)));
+  }, [courseId]);
 
   return (
     <div className="flex-fill ms-3">
@@ -84,7 +101,8 @@ function QuizList() {
                                 </Link>
                                 <li
                                   className="dropdown-item"
-                                  onClick={() => dispatch(deleteQuiz(quiz.id))}
+                                  // onClick={() => dispatch(deleteQuiz(quiz.id))}
+                                  onClick={() => handelDeleteQuiz(quiz.id)}
                                 >
                                   Delete
                                 </li>

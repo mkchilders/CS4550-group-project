@@ -1,15 +1,6 @@
-import { quizzes } from "../../Database";
+// import { quizzes } from "../../Database";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { useState } from "react";
-
-const hello_api = "http://localhost:4000/kanbas/hello";
-// const [hello, setHello] = useState();
-const fetchHello = async () => {
-  const response = await axios.get(hello_api);
-  // setHello(response.data);
-  console.log(response.data);
-};
 
 const initialState = {
   // quizzes: quizzes,
@@ -21,8 +12,11 @@ const quizzesSlice = createSlice({
   name: "quizzes",
   initialState,
   reducers: {
+    setQuizzes: (state, action) => {
+      state.quizzes = action.payload;
+    },
+
     addQuiz: (state, action) => {
-      const hello_message = fetchHello();
       state.quizzes = [
         {
           ...action.payload,
@@ -52,6 +46,6 @@ const quizzesSlice = createSlice({
   },
 });
 
-export const { addQuiz, deleteQuiz, updateQuiz, setQuiz } =
+export const { addQuiz, deleteQuiz, updateQuiz, setQuiz, setQuizzes } =
   quizzesSlice.actions;
 export default quizzesSlice.reducer;
