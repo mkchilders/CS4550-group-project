@@ -1,6 +1,7 @@
 // import { quizzes } from "../../Database";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import * as client from "./client";
 
 const initialState = {
   // quizzes: quizzes,
@@ -22,6 +23,7 @@ const quizzesSlice = createSlice({
           ...action.payload,
           questions: [],
           points: 0,
+          title: "new Quiz",
         },
         ...state.quizzes,
       ];
@@ -41,7 +43,7 @@ const quizzesSlice = createSlice({
       });
     },
     setQuiz: (state, action) => {
-      state.quiz = action.payload;
+      state.quiz = { ...state.quiz, ...action.payload };
     },
   },
 });

@@ -18,7 +18,6 @@ import {
   setQuiz,
   setQuizzes,
 } from "./quizReducer";
-import AddQuiz from "./addQuiz";
 import * as client from "./client";
 
 function QuizList() {
@@ -30,9 +29,11 @@ function QuizList() {
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
   const dispatch = useDispatch();
   const [quizIsOpen, setQuizIsOpen] = useState(false);
+  const new_id = new Date().getTime().toString();
 
   const handleAddQuiz = () => {
     client.addQuiz(courseId, quiz).then((quiz) => {
+      console.log("input ?:", quiz);
       dispatch(addQuiz(quiz));
     });
   };
@@ -52,16 +53,16 @@ function QuizList() {
       <div className="d-flex justify-content-between">
         <input type="text" placeholder="Search for Quiz" />
         <div>
-          <AddQuiz />
-          <button
+          <Link
             className="btn btn-danger"
             onClick={() => {
               handleAddQuiz();
               alert("Success: Quiz Added!");
             }}
+            to={`/Kanbas/Courses/${courseId}/Quizzes/${new_id}`}
           >
             <FaPlus /> Add Quiz
-          </button>
+          </Link>
           <button className="btn btn-light btn-lg ms-1">
             <FaEllipsisV />
           </button>

@@ -9,6 +9,11 @@ export const findQuizzesForCourses = async (courseId: any) => {
   return response.data;
 };
 
+export const findQuizById = async (quizId: any) => {
+  const response = await axios.get(`${API_BASE}/api/quiz/${quizId}`);
+  return response.data;
+};
+
 export const deleteQuiz = async (quizId: any) => {
   const response = await axios.delete(`${API_BASE}/api/quizzes/${quizId}`);
   return response.data;

@@ -3,7 +3,6 @@ import QuizList from "./list";
 import QuizDetails from "./quizDetails";
 import QuizPreview from "./preview";
 import QuizEdit from "./edit";
-import AddQuiz from "./addQuiz";
 
 function Quizzes() {
   return (
