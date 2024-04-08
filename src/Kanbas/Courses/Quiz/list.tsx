@@ -94,6 +94,7 @@ function QuizList() {
                             className="quiz-link"
                             to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}`}
                           >
+                            {console.log("Opening quiz", quiz.id)}
                             {quiz.title}
                           </Link>
                         </span>

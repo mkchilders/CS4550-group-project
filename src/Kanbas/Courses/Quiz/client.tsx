@@ -12,7 +12,6 @@ export const findQuizzesForCourses = async (courseId: any) => {
 
 export const findQuizById = async (quizId: any) => {
   const response = await axios.get(`${QUIZZES_API}/${quizId}`);
-  console.log("data: " + response.data);
   return response.data;
 };
 
@@ -30,6 +29,8 @@ export const addQuiz = async (courseId: any, quiz: any) => {
 };
 
 export const updateQuiz = async (quiz: any) => {
+  console.log("client: ", quiz);
+  console.log("client id: ", quiz.id);
   const response = await axios.put(`${QUIZZES_API}/${quiz.id}`, quiz);
   return response.data;
 };
