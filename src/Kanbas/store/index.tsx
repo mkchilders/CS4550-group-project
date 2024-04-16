@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import modulesReducer from "../Courses/Modules/modulesReducer";
 import quizReducer from "../Courses/Quiz/quizReducer";
+import modulesReducer from "../Courses/Modules/modulesReducer";
 
 export interface KanbasState {
   modulesReducer: {

@@ -1,10 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import EditDetails from "./editDetails";
+import { FaBan, FaCheck, FaEllipsisV } from "react-icons/fa";
+import EditQuestions from "./editQuestions";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setQuiz } from "./quizReducer";
+import * as client from "./client";
+import { KanbasState } from "../../store";
 
 function QuizEdit() {
+  const { quizId } = useParams();
+  const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    client.findQuizById(quizId).then((res) => {
+      dispatch(setQuiz(res));
+    });
+  }, []);
   return (
     <>
-      <div>Points 0</div>
+      <div className="d-flex justify-content-end">
+        <span className="mt-2">Points 0</span>
+        {!quiz.isPublished ? (
+          <span className="mt-2">
+            <FaBan className="mb-1 ms-3" /> Not Published
+          </span>
+        ) : (
+          <span className="mt-2">
+            <FaCheck className="mb-1 ms-3" /> Published
+          </span>
+        )}
+        <button className="btn btn-light btn-outline-secondary ms-3">
+          <FaEllipsisV className="my-1" />
+        </button>
+      </div>
       <hr />
       <ul className="nav nav-tabs">
         <li className="nav-item">
@@ -20,11 +51,10 @@ function QuizEdit() {
       </ul>
       <div className="tab-content">
         <div className="tab-pane fade show active" id="details">
-          {/* <p>Details tab content ...</p> */}
           <EditDetails />
         </div>
         <div className="tab-pane fade" id="questions">
-          <p>Questions tab content ...</p>
+          <EditQuestions />
         </div>
       </div>
     </>

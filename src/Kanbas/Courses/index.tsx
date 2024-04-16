@@ -5,14 +5,24 @@ import TopNavigation from "./TopNavigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import QuizList from "./Quiz/list";
 import Quizzes from "./Quiz";
-import QuizDetails from "./Quiz/quizDetails";
-import QuizPreview from "./Quiz/preview";
-import QuizEdit from "./Quiz/edit";
+const API_BASE = process.env.REACT_APP_API_BASE;
 
-function Courses({ courses }: any) {
+function Courses() {
   const { courseId } = useParams();
-  const course = courses.find((course: any) => course._id === courseId);
+  const COURSES_API = `${API_BASE}/api/courses`;
+  const [course, setCourse] = useState<any>({ _id: "" });
+  const findCourseById = async (courseId?: string) => {
+    const response = await axios.get(`${COURSES_API}/${courseId}`);
+    setCourse(response.data);
+  };
+  useEffect(() => {
+    findCourseById(courseId);
+  }, [courseId]);
+
   return (
     <>
       <TopNavigation course={course} />
@@ -31,9 +41,6 @@ function Courses({ courses }: any) {
               path="Assignments/:assignmentId"
               element={<h1>Assignment Editor</h1>}
             />
-            {/* <Route path="Quizzes/:quizId" element={<QuizDetails />} />
-            <Route path="Quizzes/:quizId/Preview" element={<QuizPreview />} />
-            <Route path="Quizzes/:quizId/Edit" element={<QuizEdit />} /> */}
             <Route path="Grades" element={<h1>Grades</h1>} />
           </Routes>
         </div>

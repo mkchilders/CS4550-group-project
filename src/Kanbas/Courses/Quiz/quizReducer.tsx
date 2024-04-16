@@ -4,7 +4,6 @@ import axios from "axios";
 import * as client from "./client";
 
 const initialState = {
-  // quizzes: quizzes,
   quizzes: [{ id: -1 }],
   quiz: {},
 };
