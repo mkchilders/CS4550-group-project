@@ -1,15 +1,21 @@
 .quiz-link {
-    text-decoration: none;
-    color: rgb(77, 77, 77);
-    font-weight: bold;
+  text-decoration: none;
+  color: rgb(77, 77, 77);
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .quiz-attribute div {
-    min-height: 2rem;
-    line-height: 2rem;
-    color: rgb(77, 77, 77);
+  min-height: 2rem;
+  line-height: 2rem;
+  color: rgb(77, 77, 77);
 }
 
 table * {
-    color: rgb(77, 77, 77) !important;
+  color: rgb(77, 77, 77) !important;
+}
+
+.quiz-details {
+  font-size: 0.9rem;
+  color: rgb(77, 77, 77);
 }

@@ -8,7 +8,8 @@ import {
   FaEllipsisV,
   FaPlus,
   FaCaretRight,
-  FaPoo,
+  FaRocket,
+  FaCheckCircle,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import {
@@ -40,6 +41,29 @@ function QuizList() {
     client.deleteQuiz(quizId).then((status) => dispatch(deleteQuiz(quizId)));
   };
 
+  const calculateAvailability = (quiz: any) => {
+    // TODO remove consts below when we convert quizzes to mongodb
+    const availableDate = Date.parse(quiz.availableDate);
+    const untilDate = Date.parse(quiz.untilDate);
+    const today = Date.now();
+
+    if (today >= availableDate && today >= untilDate) {
+      return <span className="me-3">Closed</span>;
+    } else if (today <= untilDate && today >= availableDate) {
+      return <span className="me-3">Available</span>;
+    } else {
+      return (
+        <span className="me-3">
+          Not Available Until{" "}
+          <span className="fw-normal">
+            {new Date(quiz.availableDate).toDateString().slice(0, 10)} at{" "}
+            {new Date(quiz.availableDate).toLocaleTimeString()}
+          </span>
+        </span>
+      );
+    }
+  };
+
   useEffect(() => {
     client
       .findQuizzesForCourses(courseId)
@@ -55,7 +79,6 @@ function QuizList() {
             className="btn btn-danger"
             onClick={() => {
               handleAddQuiz();
-              alert("Success: Quiz Added!");
             }}
             to={`/Kanbas/Courses/${courseId}/Quizzes/${new_id}`}
           >
@@ -68,36 +91,60 @@ function QuizList() {
       </div>
       <hr />
 
-      <ul className="list-group">
+      <ul className="list-group wd-modules">
         {quizIsOpen ? (
           <li className="list-group-item">
-            <p className="" onClick={() => setQuizIsOpen(!quizIsOpen)}>
-              <span>
-                <FaCaretDown size={20} className="me-3" />
-              </span>
-              Quizzes
-            </p>
+            <div onClick={() => setQuizIsOpen(!quizIsOpen)}>
+              <FaCaretDown className="fs-5 me-3 mb-1" />
+              Assignment Quizzes
+            </div>
 
             {quizList.length > 1 ||
-            (quizList.length == 1 && quizList[0].id !== -1) ? (
+            (quizList.length === 1 && quizList[0].id !== -1) ? (
               <ul className="list-group">
                 {quizList
                   .filter((quiz) => quiz.course === courseId)
                   .map((quiz) => (
                     <li key={quiz.id} className="list-group-item">
                       <div className="d-flex justify-content-between">
-                        <span>
-                          <FaPoo size={30} className="me-3" />
-                          <Link
-                            className="quiz-link"
-                            to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}`}
-                          >
-                            {quiz.title}
-                          </Link>
+                        <span className="d-flex flex-row">
+                          <FaRocket className="me-3 text-success mt-3" />
+                          <div className="flex-column">
+                            <Link
+                              className="quiz-link"
+                              to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}`}
+                            >
+                              {quiz.title}
+                            </Link>
+                            <div className="quiz-details">
+                              {calculateAvailability(quiz)}
+                              <span className="me-3">
+                                Due{" "}
+                                <span className="fw-normal">
+                                  {new Date(quiz.dueDate)
+                                    .toDateString()
+                                    .slice(0, 10)}{" "}
+                                  at{" "}
+                                  {new Date(quiz.dueDate).toLocaleTimeString()}
+                                </span>
+                              </span>
+                              <span className="me-3 fw-normal">
+                                {quiz.points} pts
+                              </span>
+                              <span className="me-3 fw-normal">
+                                {quiz.questions.length} Questions
+                              </span>
+                            </div>
+                          </div>
                         </span>
                         <span>
-                          <div className="d-flex align-items-center">
-                            <FaBan color={"red"} className="me-3" />
+                          <div className="d-flex align-items-center mt-2">
+                            {/* TODO add click to publish! */}
+                            {quiz.isPublished ? (
+                              <FaCheckCircle className="text-success me-3" />
+                            ) : (
+                              <FaBan className="me-3" />
+                            )}
                             <div className="dropdown">
                               <button
                                 className="btn btn-outline-secondary dropdown-toggle"
@@ -128,28 +175,25 @@ function QuizList() {
                           </div>
                         </span>
                       </div>
-                      <div>
-                        <h5>
-                          {quiz.points} pts, {quiz.questions.length} Questions
-                        </h5>
-                      </div>
                     </li>
                   ))}
               </ul>
             ) : (
               <p className="alert alert-warning">
-                There is no Quiz yet. Click the Add Quiz button to add Quizzes!
+                There are no Quizzes yet. Click the Add Quiz button to add
+                Quizzes!
               </p>
             )}
           </li>
         ) : (
-          <li className="list-group-item">
-            <p onClick={() => setQuizIsOpen(!quizIsOpen)}>
-              <span>
-                <FaCaretRight size={20} className="me-3" />
-              </span>
-              Quizzes
-            </p>
+          <li
+            className="list-group-item"
+            onClick={() => setQuizIsOpen(!quizIsOpen)}
+          >
+            <div className="">
+              <FaCaretRight className="fs-5 me-3 mb-1" />
+              Assignment Quizzes
+            </div>
           </li>
         )}
       </ul>
