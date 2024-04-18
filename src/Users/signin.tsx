@@ -1,10 +1,7 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "./client";
-import { useNavigate } from "react-router";
 import * as client from "./client";
-import { Link } from "react-router-dom";
-import { FaSignInAlt } from "react-icons/fa";
-
 export default function Signin() {
   const [credentials, setCredentials] = useState<User>({
     _id: "",
@@ -13,6 +10,8 @@ export default function Signin() {
     firstName: "",
     lastName: "",
     role: "USER",
+    dob: "",
+    email: "",
   });
   const navigate = useNavigate();
   const signin = async () => {
@@ -20,31 +19,30 @@ export default function Signin() {
     navigate("/Kanbas/Account/Profile");
   };
   return (
-    <div className="d-flex justify-content-center mt-5">
-      <div className="d-flex flex-column w-50">
-        <h1>
-          Signin <FaSignInAlt />
-        </h1>
-        <input
-          className="mb-2"
-          placeholder="username"
-          onChange={(e) => {
-            setCredentials({ ...credentials, username: e.target.value });
-          }}
-        />
-        <input
-          className="mb-2"
-          type={"password"}
-          placeholder="password"
-          onChange={(e) => {
-            setCredentials({ ...credentials, password: e.target.value });
-          }}
-        />
-        <button className="btn btn-primary btn-sm mb-1 mt-1" onClick={signin}>
-          Signin
+    <div  >
+      <h1>Sign In</h1>
+      <input
+        value={credentials.username}
+        onChange={(e) =>
+          setCredentials({ ...credentials, username: e.target.value })
+        }
+        placeholder="Username"
+        className="mb-1 mt-3"
+      />
+      <br />
+      <input
+        value={credentials.password}
+        onChange={(e) =>
+          setCredentials({ ...credentials, password: e.target.value })
+        }
+        placeholder="Password"
+      />
+      <div className="mt-3">
+        <button className="btn btn-primary me-1" onClick={signin}>
+          Sign In
         </button>
-        <Link className="btn btn-warning btn-sm" to="/Kanbas/Account/Signup">
-          Signup
+        <Link className="btn btn-success" to="/Kanbas/Account/Signup">
+          Sign Up
         </Link>
       </div>
     </div>

@@ -21,14 +21,13 @@ import {
 import * as client from "./client";
 
 function QuizList() {
-  // There are a list of quizzes
   const { courseId } = useParams();
   const quizList = useSelector(
     (state: KanbasState) => state.quizReducer.quizzes
   );
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
   const dispatch = useDispatch();
-  const [quizIsOpen, setQuizIsOpen] = useState(false);
+  const [quizIsOpen, setQuizIsOpen] = useState(true);
   const new_id = new Date().getTime().toString();
 
   const handleAddQuiz = () => {
@@ -37,7 +36,7 @@ function QuizList() {
     });
   };
 
-  const handelDeleteQuiz = (quizId: any) => {
+  const handleDeleteQuiz = (quizId: any) => {
     client.deleteQuiz(quizId).then((status) => dispatch(deleteQuiz(quizId)));
   };
 
@@ -117,8 +116,7 @@ function QuizList() {
                                 </Link>
                                 <li
                                   className="dropdown-item"
-                                  // onClick={() => dispatch(deleteQuiz(quiz.id))}
-                                  onClick={() => handelDeleteQuiz(quiz.id)}
+                                  onClick={() => handleDeleteQuiz(quiz.id)}
                                 >
                                   Delete
                                 </li>
