@@ -33,7 +33,6 @@ function QuizList() {
 
   const handleAddQuiz = () => {
     client.addQuiz(courseId, quiz).then((quiz) => {
-      console.log("input ?:", quiz);
       dispatch(addQuiz(quiz));
     });
   };
@@ -94,7 +93,6 @@ function QuizList() {
                             className="quiz-link"
                             to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}`}
                           >
-                            {console.log("Opening quiz", quiz.id)}
                             {quiz.title}
                           </Link>
                         </span>

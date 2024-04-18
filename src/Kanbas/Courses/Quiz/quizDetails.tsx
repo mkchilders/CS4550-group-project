@@ -26,6 +26,11 @@ function QuizDetails() {
 
   const dispatch = useDispatch();
 
+  const handleUpdateQuiz = async () => {
+    const status = await client.updateQuiz(quiz);
+    dispatch(updateQuiz(quiz));
+  };
+
   useEffect(() => {
     client.findQuizById(quizId).then((res) => {
       dispatch(setQuiz(res));
@@ -39,14 +44,15 @@ function QuizDetails() {
           <button
             type="button"
             className="btn btn-success"
-            onClick={(e) =>
+            onClick={() => {
               dispatch(
-                updateQuiz({
+                setQuiz({
                   ...quiz,
                   isPublished: false,
                 })
-              )
-            }
+              );
+              handleUpdateQuiz();
+            }}
           >
             <FaCheckCircle className="mb-1" /> Published
           </button>
@@ -54,14 +60,15 @@ function QuizDetails() {
           <button
             type="button"
             className="btn btn-danger"
-            onClick={(e) =>
+            onClick={() => {
               dispatch(
-                updateQuiz({
+                setQuiz({
                   ...quiz,
                   isPublished: true,
                 })
-              )
-            }
+              );
+              handleUpdateQuiz();
+            }}
           >
             Publish
           </button>

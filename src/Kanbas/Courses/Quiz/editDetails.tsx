@@ -13,7 +13,6 @@ function EditDetails() {
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    console.log("passing id to client: ", updatedQuiz);
     client.updateQuiz(updatedQuiz).then((res) => dispatch(updateQuiz(res)));
   };
 
@@ -29,115 +28,191 @@ function EditDetails() {
 
   return (
     <>
-      <h2>{quiz.title}</h2>
-      <div className="mt-3 column-gap-3 d-flex flex-row">
-        <div className="fw-bold row-gap-3 text-end quiz-attribute ms-3">
-          <div>Title</div>
-          <div>Quiz Type</div>
-          <div>Description</div>
-          <div>Points</div>
-          <div>Assignment Group</div>
-          <div>Shuffle Answers</div>
-          <div>Time Limit</div>
-          <div>Multiple Attempts</div>
-          <div>Show Correct Answers</div>
-          <div>Access Code</div>
-          <div>One Question at a Time</div>
-          <div>Webcam Required</div>
-          <div>Lock Questions After Answering</div>
-        </div>
-        <div className="quiz-attribute">
-          <div>
-            <input
-              placeholder={quiz.title}
-              onChange={(e) =>
-                setUpdatedQuiz({ ...quiz, title: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <select>
-              <option value="Graded Quiz">Graded Quiz</option>
-              <option value="Practice Quiz">Practice Quiz</option>
-              <option value="Graded Survey">Graded Survey</option>
-              <option value="Ungraded Survey">Ungraded Survey</option>
-            </select>
-          </div>
-          <div>
-            <textarea value={quiz.Description} />
-          </div>
-          <div>
-            <input
-              placeholder={quiz.points}
-              onChange={(e) =>
-                setUpdatedQuiz({ ...quiz, points: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <select>
-              <option value="Quizzes">Quizzes</option>
-              <option value="Exams">Exams</option>
-              <option value="Assignments">Assignments</option>
-              <option value="Project">Project</option>
-            </select>
-          </div>
-          <div>
-            <select>
-              <option value="True">Yes</option>
-              <option value="False">No</option>
-            </select>
-          </div>
-          <div>
-            <input
-              type="number"
-              placeholder={quiz.timeLimit}
-              onChange={(e) =>
-                setUpdatedQuiz({ ...quiz, timeLimit: e.target.value })
-              }
-            />
-            Minutes
-          </div>
-          <div>
-            <select>
-              <option value="True">Yes</option>
-              <option value="False">No</option>
-            </select>
-            {booleanToString(quiz.multipleAttempts)}
-          </div>
-          <div>{quiz.showCorrectAnswers}</div>
-          <div>
-            <input
-              value={quiz.accessCode}
-              onChange={(e) =>
-                setUpdatedQuiz({ ...quiz, accessCode: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <select>
-              <option value="True">Yes</option>
-              <option value="False">No</option>
-            </select>
-            {booleanToString(quiz.oneQuestionAtATime)}
-          </div>
-          <div>
-            <select>
-              <option value="False">No</option>
-              <option value="True">Yes</option>
-            </select>
-            {booleanToString(quiz.webcamRequired)}
-          </div>
-          <div>
-            {" "}
-            <select>
-              <option value="False">No</option>
-              <option value="True">Yes</option>
-            </select>
-            {booleanToString(quiz.requiredViewResults)}
-          </div>
-        </div>
-      </div>
+      <table className="table mt-3 mb-4 quiz-attribute">
+        <tbody>
+          <tr>
+            <td>Title</td>
+            <td>
+              <div>
+                <input
+                  placeholder={quiz.title}
+                  onChange={(e) =>
+                    setUpdatedQuiz({ ...quiz, title: e.target.value })
+                  }
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Quiz Type</td>
+            <td>
+              <div>
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="Graded Quiz">Graded Quiz</option>
+                  <option value="Practice Quiz">Practice Quiz</option>
+                  <option value="Graded Survey">Graded Survey</option>
+                  <option value="Ungraded Survey">Ungraded Survey</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>
+              <div>
+                <input type="text" value={quiz.Description} />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Points</td>
+            <td>
+              <div>
+                <input
+                  placeholder={quiz.points}
+                  onChange={(e) =>
+                    setUpdatedQuiz({ ...quiz, points: e.target.value })
+                  }
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Assignment Group</td>
+            <td>
+              <div>
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="Quizzes">Quizzes</option>
+                  <option value="Exams">Exams</option>
+                  <option value="Assignments">Assignments</option>
+                  <option value="Project">Project</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Shuffle Answers</td>
+            <td>
+              <div>
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="True">Yes</option>
+                  <option value="False">No</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Time Limit (Minutes)</td>
+            <td>
+              <div>
+                <input
+                  type="number"
+                  placeholder={quiz.timeLimit}
+                  onChange={(e) =>
+                    setUpdatedQuiz({ ...quiz, timeLimit: e.target.value })
+                  }
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Multiple Attempts</td>
+            <td>
+              <div>
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="True">Yes</option>
+                  <option value="False">No</option>
+                </select>
+                {booleanToString(quiz.multipleAttempts)}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Show Correct Answers</td>
+            <td>
+              <select>
+                <option value="Default" selected disabled>
+                  Please Select
+                </option>
+                <option value="True">Yes</option>
+                <option value="False">No</option>
+              </select>
+              {quiz.showCorrectAnswers}
+            </td>
+          </tr>
+          <tr>
+            <td>Access Code</td>
+            <td>
+              <div>
+                <input
+                  value={quiz.accessCode}
+                  onChange={(e) =>
+                    setUpdatedQuiz({ ...quiz, accessCode: e.target.value })
+                  }
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>One Question at a Time</td>
+            <td>
+              <div>
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="True">Yes</option>
+                  <option value="False">No</option>
+                </select>
+                {booleanToString(quiz.oneQuestionAtATime)}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Webcam Required</td>
+            <td>
+              <div>
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="False">No</option>
+                  <option value="True">Yes</option>
+                </select>
+                {booleanToString(quiz.webcamRequired)}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Lock Questions After Answering</td>
+            <td>
+              <div>
+                {" "}
+                <select>
+                  <option value="Default" selected disabled>
+                    Please Select
+                  </option>
+                  <option value="False">No</option>
+                  <option value="True">Yes</option>
+                </select>
+                {booleanToString(quiz.requiredViewResults)}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <table className="table mt-3 mb-4">
         <thead>
@@ -190,7 +265,7 @@ function EditDetails() {
           className="btn btn-light btn-sm border border-1 me-2"
           onClick={handleSave}
         >
-          Cancle
+          Cancel
         </button>
         <button
           className="btn btn-light btn-sm border border-1 me-2"
