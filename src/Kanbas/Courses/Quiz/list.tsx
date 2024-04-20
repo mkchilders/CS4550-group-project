@@ -29,11 +29,11 @@ function QuizList() {
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
   const dispatch = useDispatch();
   const [quizIsOpen, setQuizIsOpen] = useState(true);
-  const new_id = new Date().getTime().toString();
+  const newId = new Date().getTime().toString();
 
   const handleAddQuiz = () => {
-    client.addQuiz(courseId, quiz).then((quiz) => {
-      dispatch(addQuiz(quiz));
+    client.addQuiz(courseId, quiz, newId).then((q) => {
+      dispatch(addQuiz(q));
     });
   };
 
@@ -80,7 +80,7 @@ function QuizList() {
             onClick={() => {
               handleAddQuiz();
             }}
-            to={`/Kanbas/Courses/${courseId}/Quizzes/${new_id}`}
+            to={`/Kanbas/Courses/${courseId}/Quizzes/${newId}`}
           >
             <FaPlus /> Add Quiz
           </Link>

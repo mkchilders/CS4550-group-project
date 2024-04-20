@@ -9,11 +9,12 @@ import { updateQuiz, setQuiz } from "./quizReducer";
 function EditDetails() {
   const { quizId } = useParams();
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
-  const [updatedQuiz, setUpdatedQuiz] = useState(quiz);
+  const [updatedQuiz, setUpdatedQuiz] = useState({});
   const dispatch = useDispatch();
 
   const handleSave = () => {
     client.updateQuiz(updatedQuiz).then((res) => dispatch(updateQuiz(res)));
+    alert("Update Success!");
   };
 
   const booleanToString = (bool: boolean) => {
@@ -22,7 +23,8 @@ function EditDetails() {
 
   useEffect(() => {
     client.findQuizById(quizId).then((res) => {
-      dispatch(setQuiz(res));
+      setUpdatedQuiz(res[0]);
+      dispatch(setQuiz(res[0]));
     });
   }, []);
 
@@ -37,7 +39,7 @@ function EditDetails() {
                 <input
                   placeholder={quiz.title}
                   onChange={(e) =>
-                    setUpdatedQuiz({ ...quiz, title: e.target.value })
+                    setUpdatedQuiz({ ...updatedQuiz, title: e.target.value })
                   }
                 />
               </div>
@@ -47,10 +49,16 @@ function EditDetails() {
             <td>Quiz Type</td>
             <td>
               <div>
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
+                <select
+                  defaultValue={quiz.quizType}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      quizType: e.target.value,
+                    });
+                  }}
+                >
+                  <option disabled>Please Select</option>
                   <option value="Graded Quiz">Graded Quiz</option>
                   <option value="Practice Quiz">Practice Quiz</option>
                   <option value="Graded Survey">Graded Survey</option>
@@ -63,7 +71,16 @@ function EditDetails() {
             <td>Description</td>
             <td>
               <div>
-                <input type="text" value={quiz.Description} />
+                <input
+                  type="text"
+                  placeholder={quiz.description}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      description: e.target.value,
+                    });
+                  }}
+                />
               </div>
             </td>
           </tr>
@@ -74,7 +91,7 @@ function EditDetails() {
                 <input
                   placeholder={quiz.points}
                   onChange={(e) =>
-                    setUpdatedQuiz({ ...quiz, points: e.target.value })
+                    setUpdatedQuiz({ ...updatedQuiz, points: e.target.value })
                   }
                 />
               </div>
@@ -84,10 +101,16 @@ function EditDetails() {
             <td>Assignment Group</td>
             <td>
               <div>
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
+                <select
+                  defaultValue={quiz.assignmentGroup}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      assignmentGroup: e.target.value,
+                    });
+                  }}
+                >
+                  <option disabled>Please Select</option>
                   <option value="Quizzes">Quizzes</option>
                   <option value="Exams">Exams</option>
                   <option value="Assignments">Assignments</option>
@@ -100,13 +123,16 @@ function EditDetails() {
             <td>Shuffle Answers</td>
             <td>
               <div>
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
-                  <option value="True">Yes</option>
-                  <option value="False">No</option>
-                </select>
+                <input
+                  type="checkbox"
+                  defaultChecked={quiz.shuffleAnswers}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      shuffleAnswers: e.target.checked,
+                    });
+                  }}
+                />
               </div>
             </td>
           </tr>
@@ -118,7 +144,10 @@ function EditDetails() {
                   type="number"
                   placeholder={quiz.timeLimit}
                   onChange={(e) =>
-                    setUpdatedQuiz({ ...quiz, timeLimit: e.target.value })
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      timeLimit: e.target.value,
+                    })
                   }
                 />
               </div>
@@ -128,28 +157,32 @@ function EditDetails() {
             <td>Multiple Attempts</td>
             <td>
               <div>
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
-                  <option value="True">Yes</option>
-                  <option value="False">No</option>
-                </select>
-                {booleanToString(quiz.multipleAttempts)}
+                <input
+                  type="checkbox"
+                  defaultChecked={quiz.multipleAttempts}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      multipleAttempts: e.target.checked,
+                    });
+                  }}
+                />
               </div>
             </td>
           </tr>
           <tr>
             <td>Show Correct Answers</td>
             <td>
-              <select>
-                <option value="Default" selected disabled>
-                  Please Select
-                </option>
-                <option value="True">Yes</option>
-                <option value="False">No</option>
-              </select>
-              {quiz.showCorrectAnswers}
+              <input
+                type="checkbox"
+                defaultChecked={quiz.showCorrectAnswers}
+                onChange={(e) => {
+                  setUpdatedQuiz({
+                    ...updatedQuiz,
+                    showCorrectAnswers: e.target.checked,
+                  });
+                }}
+              />
             </td>
           </tr>
           <tr>
@@ -157,9 +190,12 @@ function EditDetails() {
             <td>
               <div>
                 <input
-                  value={quiz.accessCode}
+                  placeholder={quiz.accessCode}
                   onChange={(e) =>
-                    setUpdatedQuiz({ ...quiz, accessCode: e.target.value })
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      accessCode: e.target.value,
+                    })
                   }
                 />
               </div>
@@ -169,14 +205,16 @@ function EditDetails() {
             <td>One Question at a Time</td>
             <td>
               <div>
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
-                  <option value="True">Yes</option>
-                  <option value="False">No</option>
-                </select>
-                {booleanToString(quiz.oneQuestionAtATime)}
+                <input
+                  type="checkbox"
+                  defaultChecked={quiz.oneQuestionAtATime}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      oneQuestionAtATime: e.target.checked,
+                    });
+                  }}
+                />
               </div>
             </td>
           </tr>
@@ -184,14 +222,16 @@ function EditDetails() {
             <td>Webcam Required</td>
             <td>
               <div>
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
-                  <option value="False">No</option>
-                  <option value="True">Yes</option>
-                </select>
-                {booleanToString(quiz.webcamRequired)}
+                <input
+                  type="checkbox"
+                  defaultChecked={quiz.webcamRequired}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      webcamRequired: e.target.checked,
+                    });
+                  }}
+                />
               </div>
             </td>
           </tr>
@@ -199,15 +239,16 @@ function EditDetails() {
             <td>Lock Questions After Answering</td>
             <td>
               <div>
-                {" "}
-                <select>
-                  <option value="Default" selected disabled>
-                    Please Select
-                  </option>
-                  <option value="False">No</option>
-                  <option value="True">Yes</option>
-                </select>
-                {booleanToString(quiz.requiredViewResults)}
+                <input
+                  type="checkbox"
+                  defaultChecked={quiz.requiredViewResults}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      requiredViewResults: e.target.checked,
+                    });
+                  }}
+                />
               </div>
             </td>
           </tr>
@@ -227,29 +268,32 @@ function EditDetails() {
           <tr>
             <td>
               <input
-                value={quiz.dueDate}
+                defaultValue={quiz.dueDate}
                 type="date"
                 onChange={(e) =>
-                  setUpdatedQuiz({ ...quiz, dueDate: e.target.value })
+                  setUpdatedQuiz({ ...updatedQuiz, dueDate: e.target.value })
                 }
               />
             </td>
             <td>{quiz.for}</td>
             <td>
               <input
-                value={quiz.availableDate}
+                defaultValue={quiz.availableDate}
                 type="date"
                 onChange={(e) =>
-                  setUpdatedQuiz({ ...quiz, availableDate: e.target.value })
+                  setUpdatedQuiz({
+                    ...updatedQuiz,
+                    availableDate: e.target.value,
+                  })
                 }
               />
             </td>
             <td>
               <input
-                value={quiz.untilDate}
+                defaultValue={quiz.untilDate}
                 type="date"
                 onChange={(e) =>
-                  setUpdatedQuiz({ ...quiz, untilDate: e.target.value })
+                  setUpdatedQuiz({ ...updatedQuiz, untilDate: e.target.value })
                 }
               />
             </td>

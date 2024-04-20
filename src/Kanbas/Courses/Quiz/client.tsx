@@ -20,7 +20,8 @@ export const deleteQuiz = async (quizId: any) => {
   return response.data;
 };
 
-export const addQuiz = async (courseId: any, quiz: any) => {
+export const addQuiz = async (courseId: any, quiz: any, newId: string) => {
+  quiz = { ...quiz, id: newId };
   const response = await axios.post(
     `${API_BASE}/api/courses/${courseId}/quizzes`,
     quiz

@@ -10,16 +10,7 @@ import * as client from "./client";
 
 function QuizDetails() {
   const { quizId } = useParams();
-  //TODO: Directly go into detail page, the state won't update; also when refresh, the quizzes goes back to initial state
-  //   const quizList = useSelector(
-  //     (state: KanbasState) => state.quizReducer.quizzes
-  //   );
-
-  //   const quiz = quizList.filter((q) => q.id === quizId)[0];
-  //   console.log("quizList in Detail", quizList);
-  //   console.log("quiz in Detail", quiz);
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
-
   const booleanToString = (bool: boolean) => {
     return bool ? "Yes" : "No";
   };
@@ -33,7 +24,7 @@ function QuizDetails() {
 
   useEffect(() => {
     client.findQuizById(quizId).then((res) => {
-      dispatch(setQuiz(res));
+      return dispatch(setQuiz(res[0]));
     });
   }, []);
 

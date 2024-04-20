@@ -5,7 +5,7 @@ import * as client from "./client";
 
 const initialState = {
   quizzes: [{ id: -1 }],
-  quiz: {},
+  quiz: { id: 0 },
 };
 
 const quizzesSlice = createSlice({
