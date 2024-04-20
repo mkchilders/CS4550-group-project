@@ -146,7 +146,7 @@ function EditQuestions() {
                         <div className="d-flex flex-row column-gap-2">
                           <h5 className="mt-2">pts: </h5>
                           <input
-                            type="text"
+                            type="number"
                             placeholder={editQuestion.points}
                             onChange={(e) =>
                               setEditQuestion({
@@ -230,7 +230,7 @@ function EditQuestions() {
           </Link>
           <Link
             className="btn btn-danger"
-            onClick={handleSave}
+            onClick={() => handleSave(updatedQuiz)}
             to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}`}
           >
             Save
