@@ -13,11 +13,14 @@ import {
 } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 
 function QuizPreview() {
   const { quizId } = useParams();
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
-  const [answers, setAnswers] = useState(new Array<[]>(quiz.questions?.length));
+  const [answers, setAnswers] = useState(
+    new Array<Array<any>>(quiz.questions?.length)
+  );
   const [currIndex, setCurrIndex] = useState(0);
 
   const date = new Date();
@@ -29,6 +32,15 @@ function QuizPreview() {
   const handleUpdateQuiz = async () => {
     const status = await client.updateQuiz(quiz);
     dispatch(updateQuiz(quiz));
+  };
+
+  const addAnswer = (ans: any, addIndex: any) => {
+    const newAnswers = answers;
+    if (!newAnswers[currIndex]) {
+      newAnswers[currIndex] = [];
+    }
+    newAnswers[currIndex][addIndex] = ans;
+    setAnswers(newAnswers);
   };
 
   useEffect(() => {
@@ -67,6 +79,8 @@ function QuizPreview() {
                         type="text"
                         name="blank"
                         id={bIndex}
+                        onChange={(e) => addAnswer(e.target.value, bIndex)}
+                        defaultValue={answers[currIndex]?.[bIndex]}
                       />
                     </div>
                   </div>
@@ -78,7 +92,15 @@ function QuizPreview() {
                   <div className="mt-3">
                     <hr />
                     <div className="mb-3">
-                      <input type="radio" name="blank" id={cIndex} />
+                      <input
+                        type="radio"
+                        name="blank"
+                        id={cIndex}
+                        onChange={() => addAnswer(c.id, 0)}
+                        defaultChecked={
+                          answers[currIndex] && answers[currIndex][0] === c.id
+                        }
+                      />
                       <label htmlFor="blank" className="ms-2">
                         {c.answer}
                       </label>
@@ -94,6 +116,10 @@ function QuizPreview() {
                   id="correct"
                   name="correct"
                   className="me-2"
+                  defaultChecked={
+                    answers[currIndex] && answers[currIndex]?.[0] === true
+                  }
+                  onChange={() => addAnswer(true, 0)}
                 />
                 <label htmlFor="correct">True</label>
                 <hr />
@@ -102,6 +128,10 @@ function QuizPreview() {
                   id="correct"
                   name="correct"
                   className="me-2"
+                  defaultChecked={
+                    answers[currIndex] && answers[currIndex]?.[0] === false
+                  }
+                  onChange={() => addAnswer(false, 0)}
                 />
                 <label htmlFor="correct" className="mb-3">
                   False
