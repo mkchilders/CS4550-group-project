@@ -29,11 +29,13 @@ function Kanbas() {
     id: new Date().getTime().toString(),
     department: "",
     credits: 4,
+    userId: "",
   });
-  const addNewCourse = async () => {
+  const addNewCourse = async (userId: any) => {
+    console.log("adding course for user: ", userId);
     try {
-      const newCourse = await client.createCourse(course);
-      setCourses([newCourse, ...courses]);
+      const newCourse = await client.createCourse(course, userId);
+      // setCourses([newCourse, ...courses]);
     } catch (err) {
       console.log(err);
     }

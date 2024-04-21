@@ -3,6 +3,8 @@ import * as client from "./client";
 import { User } from "./client";
 import { FaPlusCircle } from "react-icons/fa";
 import { BsTrash3Fill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+
 export default function UserTable() {
   const [users, setUsers] = useState<User[]>([]);
   const [user, setUser] = useState<User>({
@@ -42,6 +44,9 @@ export default function UserTable() {
   return (
     <div>
       <h1>User Table</h1>
+      <Link to="/Kanbas/Account/Profile" className="btn btn-primary">
+        Profile
+      </Link>
       <table className="table">
         <thead>
           <tr>

@@ -1,7 +1,8 @@
 import axios from "axios";
 const API_BASE = process.env.REACT_APP_API_BASE;
-
 const COURSES_API = `${API_BASE}/api/courses`;
+const BASE_API = process.env.REACT_APP_BASE_API_URL;
+const USERS_API = `${BASE_API}/api/users`;
 
 axios.defaults.withCredentials = true;
 
@@ -21,8 +22,12 @@ export const deleteCourse = async (courseId: any) => {
   const response = await axios.delete(`${COURSES_API}/${courseId}`);
   return response.data;
 };
-export const createCourse = async (course: any) => {
-  const response = await axios.post(`${COURSES_API}`, course);
+export const createCourse = async (course: any, userId: any) => {
+  console.log("adding course", course, "with userId: ", userId);
+  const response = await axios.post(`${COURSES_API}`, {
+    ...course,
+    userId: userId,
+  });
   return response.data;
 };
 export const updateCourse = async (course: any) => {
@@ -35,5 +40,17 @@ export const findCourseById = async (courseId: any) => {
 };
 export const findAllCourses = async () => {
   const response = await axios.get(`${COURSES_API}`);
+  return response.data;
+};
+
+export const findAllCoursesForUser = async (userId: any) => {
+  const response = await axios.post(`${API_BASE}/api/currentUser/courses`, {
+    userId,
+  });
+  return response.data;
+};
+
+export const currentUser = async () => {
+  const response = await axios.post(`${USERS_API}/profile`);
   return response.data;
 };
