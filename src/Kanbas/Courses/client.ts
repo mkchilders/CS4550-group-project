@@ -53,4 +53,9 @@ export const findAllCoursesForUser = async (userId: any) => {
 export const currentUser = async () => {
   const response = await axios.post(`${USERS_API}/profile`);
   return response.data;
+  // if (response.data == "Please Signin First") {
+  //   alert(response.data);
+  // } else {
+  //   return response.data;
+  // }
 };

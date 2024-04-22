@@ -5,16 +5,24 @@ import { useState } from "react";
 import * as client from "./client";
 import { useEffect } from "react";
 import { updateQuiz, setQuiz } from "./quizReducer";
+import Editor from "react-simple-wysiwyg";
+import { Link } from "react-router-dom";
 
 function EditDetails() {
-  const { quizId } = useParams();
+  const { courseId, quizId } = useParams();
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
   const [updatedQuiz, setUpdatedQuiz] = useState({});
   const dispatch = useDispatch();
 
   const handleSave = () => {
     client.updateQuiz(updatedQuiz).then((res) => dispatch(updateQuiz(res)));
-    alert("Update Success!");
+    alert("Saved Successfully!");
+  };
+
+  const handleSaveAndPub = () => {
+    const saveAndPub = { ...updatedQuiz, isPublished: true };
+    client.updateQuiz(saveAndPub).then((res) => dispatch(updateQuiz(res)));
+    alert("Saved and Published Successfully!");
   };
 
   const booleanToString = (bool: boolean) => {
@@ -71,6 +79,15 @@ function EditDetails() {
             <td>Description</td>
             <td>
               <div>
+                <Editor
+                  value={quiz.description}
+                  onChange={(e) => {
+                    setUpdatedQuiz({
+                      ...updatedQuiz,
+                      description: e.target.value,
+                    });
+                  }}
+                />
                 <input
                   type="text"
                   placeholder={quiz.description}
@@ -305,15 +322,15 @@ function EditDetails() {
       <div className="d-flex">
         <input type="checkbox" />
         <h6> Notify Users this quiz has changed </h6>
-        <button
+        <Link
           className="btn btn-light btn-sm border border-1 me-2"
-          onClick={handleSave}
+          to={`/Kanbas/Courses/${courseId}/Quizzes/`}
         >
           Cancel
-        </button>
+        </Link>
         <button
           className="btn btn-light btn-sm border border-1 me-2"
-          onClick={handleSave}
+          onClick={handleSaveAndPub}
         >
           Save and Publish
         </button>

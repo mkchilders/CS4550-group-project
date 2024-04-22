@@ -64,11 +64,16 @@ function QuizList() {
     }
   };
 
+  const handlePublishQuiz = (quiz: any) => {
+    const publishQuiz = { ...quiz, isPublished: !quiz.isPublished };
+    client.updateQuiz(publishQuiz).then((quiz) => dispatch(updateQuiz(quiz)));
+  };
+
   useEffect(() => {
     client
       .findQuizzesForCourses(courseId)
       .then((quizzes) => dispatch(setQuizzes(quizzes)));
-  }, [courseId]);
+  }, [courseId, quiz]);
 
   return (
     <div className="flex-fill ms-3">
@@ -167,7 +172,12 @@ function QuizList() {
                                 >
                                   Delete
                                 </li>
-                                <li className="dropdown-item">Publish</li>
+                                <li
+                                  className="dropdown-item"
+                                  onClick={() => handlePublishQuiz(quiz)}
+                                >
+                                  {quiz.isPublished ? "Unpublish" : "Publish"}
+                                </li>
                                 <li className="dropdown-item">Copy</li>
                                 <li className="dropdown-item">Sort</li>
                               </ul>
