@@ -66,14 +66,17 @@ function QuizList() {
 
   const handlePublishQuiz = (quiz: any) => {
     const publishQuiz = { ...quiz, isPublished: !quiz.isPublished };
-    client.updateQuiz(publishQuiz).then((quiz) => dispatch(updateQuiz(quiz)));
+    client.updateQuiz(publishQuiz).then((status) => {
+      dispatch(updateQuiz(publishQuiz));
+      dispatch(setQuiz(publishQuiz));
+    });
   };
 
   useEffect(() => {
     client
       .findQuizzesForCourses(courseId)
       .then((quizzes) => dispatch(setQuizzes(quizzes)));
-  }, [courseId, quiz]);
+  }, [courseId]);
 
   return (
     <div className="flex-fill ms-3">

@@ -5,23 +5,45 @@ import { useState } from "react";
 import * as client from "./client";
 import { useEffect } from "react";
 import { updateQuiz, setQuiz } from "./quizReducer";
-import Editor from "react-simple-wysiwyg";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState } from "draft-js";
+import "/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
 
 function EditDetails() {
   const { courseId, quizId } = useParams();
   const quiz = useSelector((state: KanbasState) => state.quizReducer.quiz);
   const [updatedQuiz, setUpdatedQuiz] = useState({});
+  const description = quiz.description ? quiz.description : "";
+  const [editorState, setEditorState] = useState(() => {
+    let content = ContentState.createFromText(description);
+    return EditorState.createWithContent(content);
+  });
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    client.updateQuiz(updatedQuiz).then((res) => dispatch(updateQuiz(res)));
+    console.log("editor", editorState.getCurrentContent().getPlainText());
+    const savewitheditor = {
+      ...updatedQuiz,
+      description: editorState.getCurrentContent().getPlainText(),
+    };
+    client.updateQuiz(savewitheditor).then((status) => {
+      dispatch(updateQuiz(savewitheditor));
+      dispatch(setQuiz(savewitheditor));
+    });
     alert("Saved Successfully!");
   };
 
   const handleSaveAndPub = () => {
-    const saveAndPub = { ...updatedQuiz, isPublished: true };
-    client.updateQuiz(saveAndPub).then((res) => dispatch(updateQuiz(res)));
+    const saveAndPub = {
+      ...updatedQuiz,
+      isPublished: true,
+      description: editorState.getCurrentContent().getPlainText(),
+    };
+    client.updateQuiz(saveAndPub).then((status) => {
+      dispatch(updateQuiz(saveAndPub));
+      dispatch(setQuiz(saveAndPub));
+    });
     alert("Saved and Published Successfully!");
   };
 
@@ -80,13 +102,8 @@ function EditDetails() {
             <td>
               <div>
                 <Editor
-                  value={quiz.description}
-                  onChange={(e) => {
-                    setUpdatedQuiz({
-                      ...updatedQuiz,
-                      description: e.target.value,
-                    });
-                  }}
+                  editorState={editorState}
+                  onEditorStateChange={setEditorState}
                 />
                 <input
                   type="text"
