@@ -1,4 +1,15 @@
+import { Editor } from "react-draft-wysiwyg";
+import { useState } from "react";
+import { EditorState, ContentState } from "draft-js";
+import "/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 function TrueFalse({ editQuestion, setEditQuestion, updateQuestion }: any) {
+  const [editorState, setEditorState] = useState(() => {
+    let content = ContentState.createFromText(
+      editQuestion.question ? editQuestion.question : ""
+    );
+    return EditorState.createWithContent(content);
+  });
   return (
     <>
       <div>
@@ -6,17 +17,18 @@ function TrueFalse({ editQuestion, setEditQuestion, updateQuestion }: any) {
         answer.
       </div>
       <h5 className="mt-4">Question:</h5>
-      <input
-        type="text"
-        placeholder={editQuestion.question}
-        className="p-2 w-100"
-        onChange={(e) =>
-          setEditQuestion({
-            ...editQuestion,
-            question: e.target.value,
-          })
-        }
-      />
+      <div className="border p-2">
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={setEditorState}
+          onChange={() =>
+            setEditQuestion({
+              ...editQuestion,
+              question: editorState.getCurrentContent().getPlainText(),
+            })
+          }
+        />
+      </div>
       <h5 className="mt-4">Answers:</h5>
       <div className="d-flex flex-column">
         <div className="flex-row mb-2">

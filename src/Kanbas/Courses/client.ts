@@ -23,7 +23,6 @@ export const deleteCourse = async (courseId: any) => {
   return response.data;
 };
 export const createCourse = async (course: any, userId: any) => {
-  console.log("adding course", course, "with userId: ", userId);
   const response = await axios.post(`${COURSES_API}`, {
     ...course,
     userId: userId,
@@ -53,9 +52,4 @@ export const findAllCoursesForUser = async (userId: any) => {
 export const currentUser = async () => {
   const response = await axios.post(`${USERS_API}/profile`);
   return response.data;
-  // if (response.data == "Please Signin First") {
-  //   alert(response.data);
-  // } else {
-  //   return response.data;
-  // }
 };

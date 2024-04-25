@@ -22,6 +22,14 @@ function QuizDetails() {
     dispatch(updateQuiz(quiz));
   };
 
+  const handlePublishQuiz = () => {
+    const publishQuiz = { ...quiz, isPublished: !quiz.isPublished };
+    client.updateQuiz(publishQuiz).then((status) => {
+      dispatch(updateQuiz(publishQuiz));
+      dispatch(setQuiz(publishQuiz));
+    });
+  };
+
   useEffect(() => {
     client.findQuizById(quizId).then((res) => {
       return dispatch(setQuiz(res[0]));
@@ -35,15 +43,7 @@ function QuizDetails() {
           <button
             type="button"
             className="btn btn-success"
-            onClick={() => {
-              dispatch(
-                setQuiz({
-                  ...quiz,
-                  isPublished: false,
-                })
-              );
-              handleUpdateQuiz();
-            }}
+            onClick={handlePublishQuiz}
           >
             <FaCheckCircle className="mb-1" /> Published
           </button>
@@ -51,15 +51,7 @@ function QuizDetails() {
           <button
             type="button"
             className="btn btn-danger"
-            onClick={() => {
-              dispatch(
-                setQuiz({
-                  ...quiz,
-                  isPublished: true,
-                })
-              );
-              handleUpdateQuiz();
-            }}
+            onClick={handlePublishQuiz}
           >
             Publish
           </button>
@@ -110,7 +102,7 @@ function QuizDetails() {
           <div>{quiz.timeLimit} Minutes</div>
           <div>{booleanToString(quiz.multipleAttempts)}</div>
           <div>{quiz.viewResponses}</div>
-          <div>{quiz.showCorrectAnswers}</div>
+          <div>{booleanToString(quiz.showCorrectAnswers)}</div>
           <div>{booleanToString(quiz.oneQuestionAtATime)}</div>
           <div>{booleanToString(quiz.requireRespondus)}</div>
           <div>{booleanToString(quiz.requiredViewResults)}</div>
@@ -130,10 +122,19 @@ function QuizDetails() {
         </thead>
         <tbody>
           <tr>
-            <td>{quiz.dueDate}</td>
+            <td>
+              {new Date(quiz.dueDate).toDateString().slice(0, 10)} at{" "}
+              {new Date(quiz.dueDate).toLocaleTimeString()}
+            </td>
             <td>{quiz.for}</td>
-            <td>{quiz.availableDate}</td>
-            <td>{quiz.untilDate}</td>
+            <td>
+              {new Date(quiz.availableDate).toDateString().slice(0, 10)} at{" "}
+              {new Date(quiz.availableDate).toLocaleTimeString()}
+            </td>
+            <td>
+              {new Date(quiz.untilDate).toDateString().slice(0, 10)} at{" "}
+              {new Date(quiz.untilDate).toLocaleTimeString()}
+            </td>
           </tr>
         </tbody>
       </table>

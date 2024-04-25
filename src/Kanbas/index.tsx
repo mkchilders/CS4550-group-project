@@ -32,10 +32,8 @@ function Kanbas() {
     userId: "",
   });
   const addNewCourse = async (userId: any) => {
-    console.log("adding course for user: ", userId);
     try {
       const newCourse = await client.createCourse(course, userId);
-      // setCourses([newCourse, ...courses]);
     } catch (err) {
       console.log(err);
     }

@@ -22,7 +22,6 @@ function EditDetails() {
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    console.log("editor", editorState.getCurrentContent().getPlainText());
     const savewitheditor = {
       ...updatedQuiz,
       description: editorState.getCurrentContent().getPlainText(),
@@ -31,7 +30,6 @@ function EditDetails() {
       dispatch(updateQuiz(savewitheditor));
       dispatch(setQuiz(savewitheditor));
     });
-    alert("Saved Successfully!");
   };
 
   const handleSaveAndPub = () => {
@@ -44,11 +42,6 @@ function EditDetails() {
       dispatch(updateQuiz(saveAndPub));
       dispatch(setQuiz(saveAndPub));
     });
-    alert("Saved and Published Successfully!");
-  };
-
-  const booleanToString = (bool: boolean) => {
-    return bool ? "Yes" : "No";
   };
 
   useEffect(() => {
@@ -100,20 +93,11 @@ function EditDetails() {
           <tr>
             <td>Description</td>
             <td>
-              <div>
+              <div className="border p-2">
                 <Editor
                   editorState={editorState}
                   onEditorStateChange={setEditorState}
-                />
-                <input
-                  type="text"
                   placeholder={quiz.description}
-                  onChange={(e) => {
-                    setUpdatedQuiz({
-                      ...updatedQuiz,
-                      description: e.target.value,
-                    });
-                  }}
                 />
               </div>
             </td>
@@ -123,6 +107,7 @@ function EditDetails() {
             <td>
               <div>
                 <input
+                  type="number"
                   placeholder={quiz.points}
                   onChange={(e) =>
                     setUpdatedQuiz({ ...updatedQuiz, points: e.target.value })
@@ -150,6 +135,14 @@ function EditDetails() {
                   <option value="Assignments">Assignments</option>
                   <option value="Project">Project</option>
                 </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Assigned To</td>
+            <td>
+              <div>
+                <input type="text" />
               </div>
             </td>
           </tr>
@@ -336,27 +329,32 @@ function EditDetails() {
       </table>
 
       <hr />
-      <div className="d-flex">
-        <input type="checkbox" />
-        <h6> Notify Users this quiz has changed </h6>
-        <Link
-          className="btn btn-light btn-sm border border-1 me-2"
-          to={`/Kanbas/Courses/${courseId}/Quizzes/`}
-        >
-          Cancel
-        </Link>
-        <button
-          className="btn btn-light btn-sm border border-1 me-2"
-          onClick={handleSaveAndPub}
-        >
-          Save and Publish
-        </button>
-        <button
-          className="btn btn-danger btn-sm border border-1"
-          onClick={handleSave}
-        >
-          Save
-        </button>
+      <div className="d-flex justify-content-between">
+        <label className="mt-1">
+          <input type="checkbox"></input> Notify users this quiz has changed
+        </label>
+        <div className="column-gap-1 btn-toolbar">
+          <Link
+            className="btn btn-light btn-outline-secondary"
+            to={`/Kanbas/Courses/${courseId}/Quizzes/Home`}
+          >
+            Cancel
+          </Link>
+          <Link
+            className="btn btn-light btn-outline-secondary"
+            onClick={handleSaveAndPub}
+            to={`/Kanbas/Courses/${courseId}/Quizzes/Home`}
+          >
+            Save and Publish
+          </Link>
+          <Link
+            className="btn btn-danger"
+            onClick={handleSave}
+            to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz.id}`}
+          >
+            Save
+          </Link>
+        </div>
       </div>
       <hr />
     </>

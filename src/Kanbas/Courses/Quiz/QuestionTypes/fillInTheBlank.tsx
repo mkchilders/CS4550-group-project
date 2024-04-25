@@ -1,10 +1,20 @@
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { Editor } from "react-draft-wysiwyg";
+import { useState } from "react";
+import { EditorState, ContentState } from "draft-js";
+import "/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function FillInTheBlank({
   editQuestion,
   setEditQuestion,
   updateQuestion,
 }: any) {
+  const [editorState, setEditorState] = useState(() => {
+    let content = ContentState.createFromText(
+      editQuestion.question ? editQuestion.question : ""
+    );
+    return EditorState.createWithContent(content);
+  });
   const updateAnswer = (id: any, ans: any) => {
     const newBlanks = editQuestion.blanks.map((c: any) => {
       if (c.id === id) {
@@ -13,6 +23,14 @@ function FillInTheBlank({
         return c;
       }
     });
+    setEditQuestion({
+      ...editQuestion,
+      blanks: newBlanks,
+    });
+  };
+
+  const removeBlank = (blankId: any) => {
+    const newBlanks = editQuestion.blanks.filter((b: any) => b.id !== blankId);
     setEditQuestion({ ...editQuestion, blanks: newBlanks });
   };
 
@@ -37,28 +55,37 @@ function FillInTheBlank({
         their answer.
       </div>
       <h5 className="mt-4">Question:</h5>
-      <input
-        type="text"
-        placeholder={editQuestion.question}
-        className="p-2 w-100"
-        onChange={(e) =>
-          setEditQuestion({
-            ...editQuestion,
-            question: e.target.value,
-          })
-        }
-      />
+      <div className="border p-2">
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={setEditorState}
+          onChange={() =>
+            setEditQuestion({
+              ...editQuestion,
+              question: editorState.getCurrentContent().getPlainText(),
+            })
+          }
+        />
+      </div>
       <h5 className="mt-4">Answers:</h5>
       <div className="d-flex flex-column">
         {editQuestion.blanks.map((b: any) => (
-          <div className="flex-row mb-2">
+          <div className="flex-row mb-2" key={b.id}>
             <span>Possible Answer: </span>
             <input
               type="text"
               placeholder={b.answer}
               onChange={(a) => updateAnswer(b.id, a.target.value)}
-              className="p-2 w-25"
+              className="p-2 w-25 ms-2"
             />
+            <button
+              className="btn btn-outline-danger mb-1 ms-2"
+              onClick={() => {
+                removeBlank(b.id);
+              }}
+            >
+              <FaTrash />
+            </button>
           </div>
         ))}
         <button

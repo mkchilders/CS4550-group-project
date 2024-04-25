@@ -33,7 +33,6 @@ function Dashboard({
     client
       .currentUser()
       .then((cur) => {
-        console.log("find all course for:", cur);
         return client.findAllCoursesForUser(cur._id);
       })
       .then((courses) => dispatch(setCourses(courses)));

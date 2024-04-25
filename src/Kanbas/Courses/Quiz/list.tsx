@@ -42,7 +42,6 @@ function QuizList() {
   };
 
   const calculateAvailability = (quiz: any) => {
-    // TODO remove consts below when we convert quizzes to mongodb
     const availableDate = Date.parse(quiz.availableDate);
     const untilDate = Date.parse(quiz.untilDate);
     const today = Date.now();
@@ -147,12 +146,13 @@ function QuizList() {
                         </span>
                         <span>
                           <div className="d-flex align-items-center mt-2">
-                            {/* TODO add click to publish! */}
-                            {quiz.isPublished ? (
-                              <FaCheckCircle className="text-success me-3" />
-                            ) : (
-                              <FaBan className="me-3" />
-                            )}
+                            <div onClick={() => handlePublishQuiz(quiz)}>
+                              {quiz.isPublished ? (
+                                <FaCheckCircle className="text-success me-3" />
+                              ) : (
+                                <FaBan className="me-3" />
+                              )}
+                            </div>
                             <div className="dropdown">
                               <button
                                 className="btn btn-outline-secondary dropdown-toggle"
@@ -192,10 +192,12 @@ function QuizList() {
                   ))}
               </ul>
             ) : (
-              <p className="alert alert-warning">
-                There are no Quizzes yet. Click the Add Quiz button to add
-                Quizzes!
-              </p>
+              <ul className="list-group">
+                <li className="alert alert-warning">
+                  There are no Quizzes yet. Click the Add Quiz button to add
+                  Quizzes!
+                </li>
+              </ul>
             )}
           </li>
         ) : (

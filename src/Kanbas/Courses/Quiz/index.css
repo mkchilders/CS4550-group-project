@@ -38,3 +38,7 @@ table * {
   margin-bottom: 2rem !important;
   margin-top: 1rem !important;
 }
+
+.nav-link.active {
+  color: black !important;
+}

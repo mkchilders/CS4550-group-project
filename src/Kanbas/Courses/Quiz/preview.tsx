@@ -162,9 +162,12 @@ function QuizPreview() {
       <hr />
       <div className="d-block float-end mb-3 mt-2">
         <span>Quiz saved at {currTime} </span>
-        <button className="btn btn-outline-secondary btn-light p-2 ms-3">
+        <Link
+          className="btn btn-outline-secondary btn-light p-2 ms-3"
+          to={`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz.id}`}
+        >
           <span className="mx-1">Submit Quiz</span>
-        </button>
+        </Link>
       </div>
       <br />
       <hr className="mt-5" />

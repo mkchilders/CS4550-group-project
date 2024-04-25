@@ -3,6 +3,57 @@ import axios from "axios";
 const API_BASE = process.env.REACT_APP_API_BASE;
 const QUIZZES_API = `${API_BASE}/api/quizzes`;
 
+axios.defaults.withCredentials = true;
+
+export interface Quiz {
+  id: string;
+  title: string;
+  course: string;
+  description: string;
+  isPublished: boolean;
+  quizType: string;
+  points: boolean;
+  for: string;
+  viewResponses: string;
+  requireRespondus: boolean;
+  requiredViewResults: boolean;
+  assignmentGroup: string;
+  shuffleAnswers: boolean;
+  timeLimit: number;
+  multipleAttempts: boolean;
+  showCorrectAnswers: boolean;
+  accessCode: string;
+  oneQuestionAtATime: boolean;
+  webcamRequired: boolean;
+  lockQuestionsAfterAnswering: boolean;
+  dueDate: string;
+  availableDate: string;
+  untilDate: string;
+  questions: [
+    {
+      id: string;
+      type: string;
+      title: string;
+      points: number;
+      question: string;
+      blanks: [
+        {
+          id: number;
+          answer: string;
+        }
+      ];
+      choices: [
+        {
+          id: number;
+          answer: string;
+          isCorrect: boolean;
+        }
+      ];
+      trueFalse: boolean;
+    }
+  ];
+}
+
 export const findQuizzesForCourses = async (courseId: any) => {
   const response = await axios.get(
     `${API_BASE}/api/courses/${courseId}/quizzes`

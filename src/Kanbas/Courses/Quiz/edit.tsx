@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { setQuiz } from "./quizReducer";
 import * as client from "./client";
 import { KanbasState } from "../../store";
+import "./index.css";
 
 function QuizEdit() {
   const { quizId } = useParams();
@@ -16,7 +17,7 @@ function QuizEdit() {
 
   useEffect(() => {
     client.findQuizById(quizId).then((res) => {
-      dispatch(setQuiz(res));
+      dispatch(setQuiz(res[0]));
     });
   }, []);
   return (
@@ -39,12 +40,20 @@ function QuizEdit() {
       <hr />
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <a className="nav-link active" href="#details" data-bs-toggle="tab">
+          <a
+            className="nav-link text-danger active"
+            href="#details"
+            data-bs-toggle="tab"
+          >
             Details
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#questions" data-bs-toggle="tab">
+          <a
+            className="nav-link text-danger"
+            href="#questions"
+            data-bs-toggle="tab"
+          >
             Questions
           </a>
         </li>

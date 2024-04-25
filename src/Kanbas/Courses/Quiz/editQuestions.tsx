@@ -19,7 +19,16 @@ function EditQuestions() {
   const dispatch = useDispatch();
 
   const handleSave = (q: any) => {
-    client.updateQuiz(q).then((res) => dispatch(updateQuiz(res)));
+    let quizPoints = 0;
+    updatedQuiz.questions.forEach((q: any) => (quizPoints += q.points));
+    const newQuiz = {
+      ...q,
+      points: quizPoints,
+    };
+    client.updateQuiz(newQuiz).then((res) => {
+      dispatch(updateQuiz(newQuiz));
+      dispatch(setQuiz(newQuiz));
+    });
   };
 
   const updateQuestion = (id: any) => {
@@ -39,10 +48,12 @@ function EditQuestions() {
   };
 
   const addQuestion = () => {
+    const questionsLength =
+      updatedQuiz.questions?.[0] === null ? 0 : updatedQuiz.questions.length;
     const newQuestion = {
-      id: updatedQuiz.questions.length,
+      id: "Q" + questionsLength,
       type: "Multiple Choice",
-      title: "Question " + (updatedQuiz.questions.length + 1),
+      title: "Question " + (questionsLength + 1),
       points: 1,
       question: "",
       blanks: [],
@@ -58,8 +69,8 @@ function EditQuestions() {
 
   useEffect(() => {
     client.findQuizById(quizId).then((res) => {
-      dispatch(setQuiz(res));
-      setUpdatedQuiz(res);
+      setUpdatedQuiz(res[0]);
+      dispatch(setQuiz(res[0]));
     });
   }, []);
   return (
@@ -133,7 +144,7 @@ function EditQuestions() {
                               })
                             }
                           >
-                            <option value="Multiple Choice" selected>
+                            <option value="Multiple Choice">
                               Multiple Choice
                             </option>
                             <option value="True/False">True/False</option>
@@ -186,10 +197,9 @@ function EditQuestions() {
             )}
           </ul>
         ) : (
-          <p className="alert alert-warning mt-3">
-            There are no questions yet. Click the New Question button to add
-            questions!
-          </p>
+          <div className="m-5">
+            <br />
+          </div>
         )}
       </li>
 
@@ -215,7 +225,7 @@ function EditQuestions() {
         <div className="column-gap-1 btn-toolbar">
           <Link
             className="btn btn-light btn-outline-secondary"
-            to={`/Kanbas/Courses/${courseId}/Quizzes/home`}
+            to={`/Kanbas/Courses/${courseId}/Quizzes/Home`}
           >
             Cancel
           </Link>
@@ -224,7 +234,7 @@ function EditQuestions() {
             onClick={() => {
               handleSave({ ...updatedQuiz, isPublished: true });
             }}
-            to={`/Kanbas/Courses/${courseId}/Quizzes/home`}
+            to={`/Kanbas/Courses/${courseId}/Quizzes/Home`}
           >
             Save & Publish
           </Link>

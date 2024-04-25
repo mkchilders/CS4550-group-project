@@ -1,10 +1,20 @@
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { Editor } from "react-draft-wysiwyg";
+import { useState } from "react";
+import { EditorState, ContentState } from "draft-js";
+import "/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function MultipleChoice({
   editQuestion,
   setEditQuestion,
   updateQuestion,
 }: any) {
+  const [editorState, setEditorState] = useState(() => {
+    let content = ContentState.createFromText(
+      editQuestion.question ? editQuestion.question : ""
+    );
+    return EditorState.createWithContent(content);
+  });
   const updateIsCorrect = (id: any) => {
     const newChoices = editQuestion.choices.map((c: any) => {
       if (c.id === id) {
@@ -13,6 +23,13 @@ function MultipleChoice({
         return { ...c, isCorrect: false };
       }
     });
+    setEditQuestion({ ...editQuestion, choices: newChoices });
+  };
+
+  const removeChoice = (choiceId: any) => {
+    const newChoices = editQuestion.choices.filter(
+      (c: any) => c.id !== choiceId
+    );
     setEditQuestion({ ...editQuestion, choices: newChoices });
   };
 
@@ -46,18 +63,18 @@ function MultipleChoice({
         answer.
       </div>
       <h5 className="mt-4">Question:</h5>
-      {/* TODO WYSIWYG! */}
-      <input
-        type="text"
-        placeholder={editQuestion.question}
-        className="p-2 w-100"
-        onChange={(e) =>
-          setEditQuestion({
-            ...editQuestion,
-            question: e.target.value,
-          })
-        }
-      />
+      <div className="border p-2">
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={setEditorState}
+          onChange={() =>
+            setEditQuestion({
+              ...editQuestion,
+              question: editorState.getCurrentContent().getPlainText(),
+            })
+          }
+        />
+      </div>
       <h5 className="mt-4">Answers:</h5>
       <div className="d-flex flex-column">
         {editQuestion.choices.map((c: any) => (
@@ -82,6 +99,14 @@ function MultipleChoice({
               onChange={(a) => updateAnswer(c.id, a.target.value)}
               className="p-2 w-25"
             />
+            <button
+              className="btn btn-outline-danger mb-1 ms-2"
+              onClick={() => {
+                removeChoice(c.id);
+              }}
+            >
+              <FaTrash />
+            </button>
           </div>
         ))}
         <button
